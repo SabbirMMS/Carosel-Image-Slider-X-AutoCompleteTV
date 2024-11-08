@@ -1,5 +1,8 @@
 package com.mrmms.caroselimageslider;
 
+import android.content.Context;
+import android.content.Intent;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +33,17 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
 
     @Override
     public void onBindViewHolder(@NonNull CarouselAdapter.CarouselViewHolder holder, int position) {
+        Context context = holder.itemView.getContext();
         int res = images.get(position);
         holder.binding.imageView.setImageResource(res);
         holder.binding.imageView.setOnClickListener(view -> {
             onItemClickListener.onClick(holder.binding.imageView, res);
             Toast.makeText(holder.itemView.getContext(), "" + position, Toast.LENGTH_SHORT).show();
+        });
+
+        holder.binding.imageView.setOnLongClickListener(view -> {
+            context.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+            return true;
         });
     }
 
